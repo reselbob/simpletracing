@@ -1,0 +1,16 @@
+{
+  "name": "httpserver",
+  "version": "1.0.0",
+  "description": "A very simple HTTP Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Bob Reselman <reselbob@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "faker": "^5.1.0",
+    "jaeger-client": "^3.10.0",
+    "opentracing": "latest"
+  }
+}
