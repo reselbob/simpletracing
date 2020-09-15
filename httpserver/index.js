@@ -24,12 +24,28 @@ const handleRequest = async (request, response)  => {
     });
 
     const obj = {message: `${faker.lorem.words(10)}`, created: new Date()}
-
+    doNuttyStuffSync(span);
     await response.setHeader("Content-Type", "application/json");
     await response.writeHead(200);
     await response.end(JSON.stringify(obj));
     span.finish();
 };
+
+const doNuttyStuffSync = (parentSpan) =>{
+    const span = tracer.startSpan('nutty_stuff', {
+        childOf: parentSpan,
+        tags: {[Tags.SPAN_KIND]: Tags.SPAN_KIND_RPC_SERVER}
+    });
+
+    for(i=0;i<10;i++){
+        const str = faker.lorem.words(5);
+        console.log(str);
+        span.setTag('nutty', i);
+        span.log({'event': 'nutty_stuff', 'value': str});
+    }
+
+    span.finish();
+}
 
 const server = http.createServer(handleRequest);
 

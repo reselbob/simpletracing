@@ -9,6 +9,8 @@ services:
       - JAEGER_AGENT_HOST=jaeger
       - JAEGER_AGENT_PORT=6831     
       - JAEGER_SAMPLER_MANAGER_HOST_PORT=jaeger:5778
+    networks:
+      - reselnet
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
@@ -19,3 +21,7 @@ services:
       - "16686:16686"
       - "14268:14268"
       - "9411:9411"
+    networks:
+      - reselnet
+networks:
+  reselnet:
