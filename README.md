@@ -1,5 +1,6 @@
 # simpletracing
-A simple repo for demonstrating the basic of OpenTelemetry and service tracing
+
+The purpose of this project to provide an example application that demonstrates the basics of OpenTelemetry. The project provides example for creating a simple trace with span in ah HTTP request.
 
 # Getting the demonstration up and running
 
