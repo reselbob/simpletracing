@@ -1,5 +1,5 @@
 # simpletracing
-A simple repo for demonstrating the basic of opentelemetry and service tracing
+A simple repo for demonstrating the basic of OpenTelemetry and service tracing
 
 # Getting the demonstration up and running
 
@@ -51,5 +51,7 @@ Open your browser to `http://localhost:16686` to view the Jaeger UI:
 ![UI](./ui.png)
 
 In the Jaeger UI, select `http_example` (A) from the Service dropdown on the Search panel on the left, then click the Find Traces (B) button found at the bottom of the Seach panel. SimpleTracing's trace will display in the main, rightside panel.
+
+09.20.2020
 
 
