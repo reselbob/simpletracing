@@ -1,5 +1,5 @@
 # simpletracing
-A simple repo for demonstrating the basic of opentelemetry and service tracing
+A simple repo for demonstrating the basic of OpenTelemetry and service tracing
 
 # Getting the demonstration up and running
 
