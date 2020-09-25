@@ -5,7 +5,7 @@ const { NodeTracerProvider } = require('@opentelemetry/node');
 const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
 const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
 
-const jaegerHostName = process.env.JAEGER_HOST_NAME || 'jaeger';
+//const jaegerHostName = process.env.JAEGER_HOST_NAME || 'jaeger';
 
 module.exports = (serviceName) => {
   const provider = new NodeTracerProvider();

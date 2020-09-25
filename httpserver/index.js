@@ -23,17 +23,17 @@ function handleRequest(request, response) {
   const currentSpan = tracer.getCurrentSpan();
   // display traceid in the terminal
   console.log(`traceid: ${currentSpan.context().traceId}`);
-  const span = tracer.startSpan('handleRequest', {
+  const span = tracer.startSpan('handleRequestToday', {
     parent: currentSpan,
     kind: 1, // server
-    attributes: { key: 'value' },
+    attributes: { time: new Date()},
   });
   // Annotate our span to capture metadata about the operation
   span.addEvent('invoking handleRequest');
   span.addEvent("message", "Hi There");
   span.end();
 
-  console.log(span);
+  //console.log(span);
   try {
     const body = [];
     request.on('error', (err) => console.log(err));
