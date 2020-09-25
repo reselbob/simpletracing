@@ -32,6 +32,8 @@ function handleRequest(request, response) {
   span.addEvent('invoking handleRequest');
   span.addEvent("message", "Hi There");
   span.end();
+
+  console.log(span);
   try {
     const body = [];
     request.on('error', (err) => console.log(err));
