@@ -1,26 +1,27 @@
-const { initTracer: initJaegerTracer } = require("jaeger-client");
+'use strict';
 
-module.exports.initTracer = serviceName => {
-  const config = {
-    serviceName: serviceName,
-    sampler: {
-      type: "const",
-      param: 1,
-    },
-    reporter: {
-      collectorEndpoint: 'http://jaeger:14268/api/traces',
-      logSpans: true,
-    },
-  };
+const opentelemetry = require('@opentelemetry/api');
+const { NodeTracerProvider } = require('@opentelemetry/node');
+const { SimpleSpanProcessor } = require('@opentelemetry/tracing');
+const { JaegerExporter } = require('@opentelemetry/exporter-jaeger');
+
+//const jaegerHostName = process.env.JAEGER_HOST_NAME || 'jaeger';
+
+module.exports = (serviceName) => {
+  const provider = new NodeTracerProvider();
+
   const options = {
-    logger: {
-      info(msg) {
-        console.log("INFO ", msg);
-      },
-      error(msg) {
-        console.log("ERROR", msg);
-      },
-    },
-  };
-  return initJaegerTracer(config, options);
+    serviceName: serviceName
+  }
+
+  console.log(options);
+  const  exporter = new JaegerExporter(options);
+ 
+
+  provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+
+  // Initialize the OpenTelemetry APIs to use the NodeTracerProvider bindings
+  provider.register();
+
+  return opentelemetry.trace.getTracer(`${serviceName}Tracer`);
 };

@@ -1,86 +1,54 @@
+'use strict';
+
+const tracer = require('./tracer')('RandomWordGenUpper');
+// eslint-disable-next-line import/order
 const http = require('http');
-const initTracer = require('./tracer').initTracer;
 const faker = require('faker');
-
-const { Tags, FORMAT_HTTP_HEADERS } = require('opentracing');
-
-const tracer = initTracer('http_example');
-
-const port = process.env.APP_PORT || 3000;
-let parentSpanContext;
-
-const handleRequest = async (request, response)  => {
-    parentSpanContext = tracer.extract(FORMAT_HTTP_HEADERS, request.headers)
-    const span = tracer.startSpan('http_server', {
-        childOf: parentSpanContext,
-        tags: {[Tags.SPAN_KIND]: Tags.SPAN_KIND_RPC_SERVER}
-    });
-
-    const dt = new Date().toString();
-    span.log({
-        'event': 'call_service',
-        'value': 'simple_tracing',
-        'date': dt
-    });
-
-    const obj = {message: `${faker.lorem.words(10)}`, created: new Date()}
-    doNuttyStuffSync(span);
-    await response.setHeader("Content-Type", "application/json");
-    await response.writeHead(200);
-    await response.end(JSON.stringify(obj));
-    span.finish();
-};
-
-const doNuttyStuffSync = (parentSpan) =>{
-    const span = tracer.startSpan('nutty_stuff', {
-        childOf: parentSpan,
-        tags: {[Tags.SPAN_KIND]: Tags.SPAN_KIND_RPC_SERVER}
-    });
-
-    for(i=0;i<10;i++){
-        const str = faker.lorem.words(5);
-        console.log(str);
-        span.setTag('nutty', i);
-        span.log({'event': 'nutty_stuff', 'value': str});
+const port = process.env.RANDOM_WORD_GEN_UPPER_PORT || 3000;
+/** Starts a HTTP server that receives requests on sample server port. */
+function startServer(port) {
+  // Creates a server
+  const server = http.createServer(handleRequest);
+  // Starts the server
+  server.listen(port, (err) => {
+    if (err) {
+      throw err;
     }
-
-    span.finish();
+    console.log(`Node HTTP listening on ${port}`);
+  });
 }
 
-const server = http.createServer(handleRequest);
+/** A function which handles requests and send response. */
+function handleRequest(request, response) {
+  const currentSpan = tracer.getCurrentSpan();
+  // display traceid in the terminal
+  console.log(`traceid: ${currentSpan.context().traceId}`);
+  const span = tracer.startSpan('handleRequestToday', {
+    parent: currentSpan,
+    kind: 1, // server
+    attributes: { time: new Date()},
+  });
+  // Annotate our span to capture metadata about the operation
+  span.addEvent('invoking handleRequest');
+  span.addEvent("message", "Hi There");
+  span.end();
 
-server.listen(port, () => {
-    console.log(`HTTP Server is listening on port ${port}`);
-});
-
-
-const shutdown = (signal) => {
-    const span = tracer.startSpan('http_server', {
-        childOf: parentSpanContext,
-        tags: {[Tags.SPAN_KIND]: Tags.SPAN_KIND_RPC_SERVER}
+  //console.log(span);
+  try {
+    const body = [];
+    request.on('error', (err) => console.log(err));
+    request.on('data', (chunk) => body.push(chunk));
+    request.on('end', () => {
+      // deliberately sleeping to mock some action.
+      setTimeout(() => {
+        const str = faker.lorem.words(5).toUpperCase();
+        response.end(str);
+      }, 1000);
     });
+  } catch (err) {
+    console.error(err);
+    span.end();
+  }
+}
 
-    span.log({
-        'event': 'shut_down',
-        'value': 'simple_tracing'
-    });
-
-    if(!signal){
-        console.log(`HTTP Server shutting down at ${new Date()}`);
-    }else{
-        console.log(`Signal ${signal} : HTTP Server shutting down at ${new Date()}`);
-    }
-    server.close(function () {
-        process.exit(0);
-    })
-    span.finish();
-};
-process.on('SIGTERM', function () {
-    shutdown('SIGTERM');
-});
-
-process.on('SIGINT', function () {
-    shutdown('SIGINT');
-});
-
-module.exports = {server,shutdown};
+startServer(port);

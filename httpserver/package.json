@@ -10,7 +10,10 @@
   "license": "MIT",
   "dependencies": {
     "faker": "^5.1.0",
-    "jaeger-client": "^3.10.0",
-    "opentracing": "latest"
+    "@opentelemetry/api": "^0.11.0",
+    "@opentelemetry/exporter-jaeger": "^0.11.0",
+    "@opentelemetry/node": "^0.11.0",
+    "@opentelemetry/plugin-http": "^0.11.0",
+    "@opentelemetry/tracing": "^0.11.0"
   }
 }

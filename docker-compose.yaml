@@ -3,12 +3,9 @@ services:
   http:
     build: ./httpserver
     ports:
-      - "4000:3000"
-    environment: 
-      - JAEGER_SERVICE_NAME=http_example
+      - "3000:3000"
+    environment:
       - JAEGER_AGENT_HOST=jaeger
-      - JAEGER_AGENT_PORT=6831     
-      - JAEGER_SAMPLER_MANAGER_HOST_PORT=jaeger:5778
     networks:
       - reselnet
   jaeger:
