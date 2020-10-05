@@ -6,8 +6,6 @@ services:
       - "3000:3000"
     environment:
       - JAEGER_AGENT_HOST=jaeger
-      - JAEGER_AGENT_PORT=6831
-      - JAEGER_REPORTING_HOST=jaeger
     networks:
       - reselnet
   jaeger:
