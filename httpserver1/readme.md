@@ -1,0 +1,1 @@
+# HTTP SERVER 1Creates a random word that get passed onto a downstream URL for repeating# Environment Variables`RANDOM_WORD_GEN_UPPER_PORT` defaults to `3000``REPEATER_URL` defaults to `localhost:3001`## Installation`npm install``node index.js`
