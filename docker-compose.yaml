@@ -1,9 +1,19 @@
 version: '3'
 services:
-  http:
-    build: ./httpserver
+  server_one:
+    build: httpserver1
     ports:
       - "3000:3000"
+    environment:
+      - JAEGER_AGENT_HOST=jaeger
+      - REPEATER_HOST=server_two
+      - REPEATER_POST=3001
+    networks:
+      - reselnet
+  server_two:
+    build: httpserver2
+    ports:
+      - "3001:3001"
     environment:
       - JAEGER_AGENT_HOST=jaeger
     networks:
