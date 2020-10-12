@@ -74,6 +74,8 @@ You will get a response similar to the following. (The actual repeated string wi
 
 Once you've run the `curl` command, you can view the Jeager UI at the following URL: `http://localhost:16686`.
 
-**NOTE:** If you are running on a Katacoda virtual machine, you will need to use Katacoda's mechanism for a browser against port, `16686`,
+**NOTE:** If you are running on a Katacoda virtual machine, you will need to use Katacoda's mechanism for a browser against port, `16686` as shown in the animated GIF below.
+
+![Accessing Jaeger in Katacoda](./images/katacoda-jaeger.gif)
 
 
