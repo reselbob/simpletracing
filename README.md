@@ -32,7 +32,7 @@ docker run -d --name jaeger \
 ```
 
 
-# Getting the demonstration up and running
+## Getting the demonstration up and running
 
 If you are not on Katacoda go here:
 
@@ -45,7 +45,7 @@ Get the code from GitHub:
 `cd simpletracing/`
 
 
-# Running Under Docker Compose
+## Running Under Docker Compose
 This application run under Docker Compose.
 
 To get the application up and running under Docker Compose execute the following command from the project's root directory:
@@ -57,5 +57,23 @@ To stop the application and remove the docker images created according to the Do
 `docker-compose down --rmi all`
 
 You can view the example Docker-Compose that ships with the code [here](./docker-compose.yaml).
+
+## Executing a Trace
+
+The way to invoke a trace is to run a `curl` command against HTTP SERVER 1. A call to HTTP SERVER 1 will create a ran string in which is then passed to HTTP SERVER 2 for repeating. The repeated string is passed back from HTTP SERVER 2 to HTTP SERVER 1.
+
+Assuing you are up and running under Docker Compose, execute the following `curl` command to invoke a trace;
+
+`curl localhost:3000`
+
+You will get a response similar to the following. (The actual repeated string will be different in your response.)
+
+`["CONSECTETUR UT UT QUO INVENTORE","CONSECTETUR UT UT QUO INVENTORE","CONSECTETUR UT UT QUO INVENTORE"]`
+
+## Viewing a Trace
+
+Once you've run the `curl` command, you can view the Jeager UI at the following URL: `http://localhost:16686`.
+
+**NOTE:** If you are running on a Katacoda virtual machine, you will need to use Katacoda's mechanism for a browser against port, `16686`,
 
 
