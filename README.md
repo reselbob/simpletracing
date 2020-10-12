@@ -1,6 +1,6 @@
 # simpletracing
 
-The purpose of this project to provide an example application that demonstrates the basics of OpenTelemetry. The project provides an example for creating a simple trace with spans in among HTTP requests between two servers.
+The purpose of this project to provide an example application that demonstrates the basics of OpenTelemetry. The project provides an example for creating a simple trace with spans among HTTP requests between two servers.
 
 The demonstration project is made up of two HTTP servers, HTTP SERVER 1 and HTTP SERVER 2. HTTP SERVER 1 creates a random string that gets passed down stream as an HTTP `POST` request to HTTP SERVER 2. HTTP SERVER 2 repeats the randon string and pass the result back as a response to HTTP SERVER 1.
 
