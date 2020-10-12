@@ -13,7 +13,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-const port = process.env.RANDOM_WORD_REPEATER_PORT || 3001;
+const port = process.env.REPEATER_PORT || 3001;
+const repeats = process.env.REPEATER_REPEATS || 3;
 
 const router = express.Router();
 
@@ -29,7 +30,7 @@ router.post('/', function (req, resp) {
   span.setAttribute('RequestData', req.body.data);
   span.addEvent('POST processing START');
   const arr = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < repeats; i++) {
     arr.push(req.body.data)
   }
   span.addEvent('POST processing END');
