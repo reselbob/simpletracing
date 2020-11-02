@@ -7,7 +7,7 @@ services:
     environment:
       - JAEGER_AGENT_HOST=jaeger
       - REPEATER_HOST=server_two
-      - REPEATER_POST=3001
+      - REPEATER_PORT=3001
     networks:
       - reselnet
   server_two:
